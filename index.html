@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ergo web development | Premium Interfaces & Sites Modernos</title>
+  <title>ergo web development | Premium Interfaces</title>
   <meta name="description" content="Criamos sites modernos, responsivos e focados em resultados. Design inteligente, desempenho rápido e a melhor experiência para seus usuários.">
   
   <!-- Fonts: Outfit (Display & Body) & JetBrains Mono (Code/Mono details) -->
@@ -19,7 +19,7 @@
 </head>
 <body>
 
-  <!-- Background overlay (fixed behind everything) -->
+  <!-- Background overlay (completely fixed and static) -->
   <div class="fixed-bg">
     <div class="bg-image" style="background-image: url('bg.jpg');"></div>
     <div class="bg-gradient-overlay"></div>
@@ -29,261 +29,114 @@
   <header class="main-header">
     <div class="nav-container">
       <a href="#" class="logo">ergo</a>
-      <nav class="nav-links">
-        <a href="#services">serviços</a>
-        <a href="#portfolio">trabalho</a>
-        <a href="#about">sobre</a>
-        <a href="#contact" class="nav-cta">iniciar projeto</a>
-      </nav>
-      <button class="mobile-menu-toggle" aria-label="Abrir Menu">
-        <i class="ph ph-list"></i>
-      </button>
+      <span class="nav-status"><span class="status-dot"></span> online</span>
     </div>
   </header>
 
-  <!-- Hero Scroll Area (Pins during card collapse) -->
-  <section class="hero-section" id="hero">
-    <div class="hero-container">
-      
-      <!-- Interactive Player Card -->
-      <div class="player-card" id="playerCard">
-        <!-- Collapsed top progress line (visible when docked) -->
-        <div class="docked-progress-container">
-          <div class="docked-progress-bar" id="dockedProgressBar"></div>
-        </div>
+  <!-- Scroll Height Container (creates the scrolling space) -->
+  <div class="scroll-height-trigger"></div>
 
-        <div class="player-inner">
-          
-          <!-- Left/Main Column: Branding and Intro -->
-          <div class="player-main">
-            <div class="player-header">
+  <!-- Persistent Card Container -->
+  <div class="card-fixed-container">
+    <div class="player-card" id="playerCard">
+      <div class="player-inner">
+        
+        <!-- Left/Main Column: Content Slides Viewport -->
+        <div class="player-main">
+          <div class="slides-viewport">
+            
+            <!-- Slide 1: Welcome -->
+            <div class="slide active" id="slide1">
               <span class="pill-tag">Stress Relief</span>
-            </div>
-            <div class="player-content">
               <h1 class="player-title">bem vindo a<br>ergo web development</h1>
-              <p class="player-desc">Criamos sites modernos, responsivos e focados em resultados. Design inteligente, desempenho rápido e a melhor experiência para seus usuários.</p>
-            </div>
-          </div>
-          
-          <!-- Center Column: Audio Wave and Volume Slider -->
-          <div class="player-interactive">
-            <!-- Canvas Visualizer (Fades in when playing) -->
-            <div class="visualizer-container">
-              <canvas id="visualizerCanvas"></canvas>
+              <p class="player-desc">Criamos sites modernos, responsivos e focados em resultados. Design inteligente e desempenho rápido.</p>
             </div>
             
-            <!-- Custom Volume Control -->
-            <div class="volume-container" id="volumeContainer">
-              <span class="volume-label">Volume</span>
-              <div class="volume-slider" id="volumeSlider">
-                <div class="slider-track">
-                  <span class="slider-dot"></span>
-                  <span class="slider-dot"></span>
-                  <span class="slider-dot"></span>
-                  <div class="slider-handle" id="sliderHandle"></div>
-                  <span class="slider-dot"></span>
-                  <span class="slider-dot"></span>
-                  <span class="slider-dot"></span>
-                </div>
-              </div>
-              <span class="volume-value" id="volumeValue">54</span>
+            <!-- Slide 2: Services -->
+            <div class="slide" id="slide2">
+              <span class="pill-tag">Serviços</span>
+              <h1 class="player-title">o que fazemos</h1>
+              <p class="player-desc">Interfaces premium sob medida. UI/UX refinado, desenvolvimento ágil, performance extrema e SEO técnico.</p>
             </div>
-          </div>
-          
-          <!-- Right Column: Vertical Scroll Progress -->
-          <div class="player-progress-column" id="progressColumn">
-            <span class="time-label top">4:15</span>
-            <div class="vertical-progress-bar">
-              <div class="progress-fill" id="progressFill"></div>
+            
+            <!-- Slide 3: Portfolio -->
+            <div class="slide" id="slide3">
+              <span class="pill-tag">Trabalhos</span>
+              <h1 class="player-title">projetos selecionados</h1>
+              <p class="player-desc">Aura Meditation (áudio espacial), Nexus Finance (dados 3d) e soluções corporativas elegantes.</p>
             </div>
-            <span class="time-label bottom">15:10</span>
-          </div>
+            
+            <!-- Slide 4: Contact -->
+            <div class="slide" id="slide4">
+              <span class="pill-tag">Contato</span>
+              <h1 class="player-title">iniciar projeto</h1>
+              <p class="player-desc">Insira seu e-mail para iniciarmos uma conversa sobre o seu projeto.</p>
+              <form class="mini-contact-form" id="contactForm">
+                <input type="email" placeholder="seu e-mail" required aria-label="Seu e-mail">
+                <button type="submit" aria-label="Enviar e-mail">
+                  <i class="ph ph-arrow-right"></i>
+                </button>
+              </form>
+            </div>
 
+          </div>
         </div>
         
-        <!-- Bottom Controls Row -->
-        <div class="player-controls" id="playerControls">
-          <div class="controls-wrapper">
-            <button class="control-btn prev-btn" id="prevBtn" aria-label="Voltar 10 segundos">
-              <i class="ph ph-arrow-counter-clockwise"></i>
-              <span class="btn-time-label">10</span>
-            </button>
-            <button class="control-btn play-btn" id="playBtn" aria-label="Reproduzir">
-              <i class="ph ph-play" id="playIcon"></i>
-            </button>
-            <button class="control-btn next-btn" id="nextBtn" aria-label="Avançar 10 segundos">
-              <i class="ph ph-arrow-clockwise"></i>
-              <span class="btn-time-label">10</span>
-            </button>
+        <!-- Center Column: Audio Wave and Volume Slider -->
+        <div class="player-interactive">
+          <!-- Canvas Visualizer (Fades in when playing) -->
+          <div class="visualizer-container">
+            <canvas id="visualizerCanvas"></canvas>
+          </div>
+          
+          <!-- Custom Volume Control -->
+          <div class="volume-container" id="volumeContainer">
+            <span class="volume-label">Volume</span>
+            <div class="volume-slider" id="volumeSlider">
+              <div class="slider-track">
+                <span class="slider-dot"></span>
+                <span class="slider-dot"></span>
+                <span class="slider-dot"></span>
+                <div class="slider-handle" id="sliderHandle"></div>
+                <span class="slider-dot"></span>
+                <span class="slider-dot"></span>
+                <span class="slider-dot"></span>
+              </div>
+            </div>
+            <span class="volume-value" id="volumeValue">54</span>
           </div>
         </div>
+        
+        <!-- Right Column: Vertical Scroll Progress -->
+        <div class="player-progress-column" id="progressColumn">
+          <span class="time-label top">4:15</span>
+          <div class="vertical-progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <span class="time-label bottom">15:10</span>
+        </div>
 
+      </div>
+      
+      <!-- Bottom Controls Row -->
+      <div class="player-controls" id="playerControls">
+        <div class="controls-wrapper">
+          <button class="control-btn prev-btn" id="prevBtn" aria-label="Voltar 10 segundos">
+            <i class="ph ph-arrow-counter-clockwise"></i>
+            <span class="btn-time-label">10</span>
+          </button>
+          <button class="control-btn play-btn" id="playBtn" aria-label="Reproduzir">
+            <i class="ph ph-play" id="playIcon"></i>
+          </button>
+          <button class="control-btn next-btn" id="nextBtn" aria-label="Avançar 10 segundos">
+            <i class="ph ph-arrow-clockwise"></i>
+            <span class="btn-time-label">10</span>
+          </button>
+        </div>
       </div>
 
     </div>
-  </section>
-
-  <!-- Main Scrollable Content -->
-  <main class="content-wrapper" id="content">
-    
-    <!-- Services Bento Section -->
-    <section class="page-section" id="services">
-      <div class="section-container">
-        <h2 class="section-title">o que fazemos</h2>
-        
-        <div class="bento-grid">
-          <!-- Card 1: Large Feature -->
-          <div class="bento-card col-span-2 bento-main-feature">
-            <div class="card-glow"></div>
-            <div class="card-content">
-              <div class="card-icon"><i class="ph ph-browser"></i></div>
-              <h3>desenvolvimento web sob medida</h3>
-              <p>Codificamos interfaces premium com foco absoluto em performance, SEO e fidelidade de design. Nossos sites carregam instantaneamente e oferecem interações fluidas que engajam seus visitantes.</p>
-            </div>
-          </div>
-          
-          <!-- Card 2: Medium Feature -->
-          <div class="bento-card bento-accent-feature">
-            <div class="card-glow"></div>
-            <div class="card-content">
-              <div class="card-icon"><i class="ph ph-compass"></i></div>
-              <h3>design de interface (ui/ux)</h3>
-              <p>layouts ergonômicos e estéticas refinadas alinhadas com a identidade da sua marca.</p>
-            </div>
-          </div>
-          
-          <!-- Card 3: Small Feature -->
-          <div class="bento-card">
-            <div class="card-glow"></div>
-            <div class="card-content">
-              <div class="card-icon"><i class="ph ph-lightning"></i></div>
-              <h3>velocidade crítica</h3>
-              <p>Otimização minuciosa para atingir pontuações perfeita no Core Web Vitals.</p>
-            </div>
-          </div>
-          
-          <!-- Card 4: Medium/Wide Feature -->
-          <div class="bento-card col-span-2">
-            <div class="card-glow"></div>
-            <div class="card-content">
-              <div class="card-icon"><i class="ph ph-trend-up"></i></div>
-              <h3>conversão & resultados</h3>
-              <p>Alinhamos a tecnologia ao seu negócio. Cada animação, cada fluxo e cada botão são pensados estrategicamente para transformar visitantes em clientes ativos.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Selected Projects Section -->
-    <section class="page-section" id="portfolio">
-      <div class="section-container">
-        <h2 class="section-title">trabalhos selecionados</h2>
-        
-        <div class="portfolio-grid">
-          <!-- Project 1 -->
-          <div class="project-card">
-            <div class="project-image-wrap">
-              <div class="project-placeholder-img" style="background-color: #3b2314;">
-                <div class="project-glow"></div>
-                <i class="ph ph-waveform"></i>
-              </div>
-            </div>
-            <div class="project-info">
-              <span class="project-category">App Web / Áudio</span>
-              <h3>Aura Meditation</h3>
-              <p>Uma plataforma de bem-estar com geradores de áudio espacial interativos.</p>
-            </div>
-          </div>
-          
-          <!-- Project 2 -->
-          <div class="project-card">
-            <div class="project-image-wrap">
-              <div class="project-placeholder-img" style="background-color: #1e293b;">
-                <div class="project-glow"></div>
-                <i class="ph ph-cube"></i>
-              </div>
-            </div>
-            <div class="project-info">
-              <span class="project-category">Branding / Web</span>
-              <h3>Nexus Finance</h3>
-              <p>Redesign de landing page corporativa com visualização de dados em 3D.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Philosophy / About Section -->
-    <section class="page-section" id="about">
-      <div class="section-container">
-        <div class="about-layout">
-          <div class="about-text">
-            <h2 class="section-title">nossa essência</h2>
-            <p class="lead-text">
-              Na ergo, acreditamos que a simplicidade é o mais alto grau de sofisticação.
-            </p>
-            <p>
-              Inspirados na ergonomia dos melhores produtos da Apple, criamos soluções digitais onde a forma e a função coexistem em perfeita harmonia. Não construímos apenas sites; desenvolvemos experiências interativas que parecem naturais, táteis e memoráveis.
-            </p>
-          </div>
-          <div class="about-stats">
-            <div class="stat-item">
-              <span class="stat-number">100%</span>
-              <span class="stat-label">Performance Core Web Vitals</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-number">0.8s</span>
-              <span class="stat-label">Tempo médio de carregamento</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact Form Section -->
-    <section class="page-section" id="contact">
-      <div class="section-container">
-        <div class="contact-card">
-          <h2 class="section-title">vamos conversar</h2>
-          <p class="contact-subtitle">Conte-nos sobre o seu projeto. Responderemos em até 24 horas.</p>
-          
-          <form class="contact-form" id="contactForm">
-            <div class="form-group">
-              <label for="name">Nome</label>
-              <input type="text" id="name" name="name" placeholder="Como devemos chamar você?" required>
-            </div>
-            
-            <div class="form-group">
-              <label for="email">E-mail</label>
-              <input type="email" id="email" name="email" placeholder="seu@email.com" required>
-            </div>
-            
-            <div class="form-group">
-              <label for="message">Mensagem</label>
-              <textarea id="message" name="message" rows="5" placeholder="Fale um pouco sobre a sua ideia..." required></textarea>
-            </div>
-            
-            <button type="submit" class="submit-btn">
-              <span>Enviar Proposta</span>
-              <i class="ph ph-arrow-right"></i>
-            </button>
-          </form>
-        </div>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="main-footer">
-      <div class="footer-container">
-        <p class="copyright">&copy; 2026 ergo. todos os direitos reservados.</p>
-        <div class="footer-meta">
-          <span>desenhado com atenção aos detalhes</span>
-        </div>
-      </div>
-    </footer>
-
-  </main>
+  </div>
 
   <!-- GSAP & ScrollTrigger via CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
