@@ -79,7 +79,6 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   filter: brightness(0.95);
-  /* No animations, completely static */
 }
 
 .bg-gradient-overlay {
@@ -152,7 +151,7 @@ body {
    Scroll Trigger Area
    ========================================================================== */
 .scroll-height-trigger {
-  height: 400vh; /* Creates the scrolling depth for 4 slides */
+  height: 400vh; /* Scroll depth for the 4 slides */
   width: 100%;
   position: relative;
   z-index: 5;
@@ -160,7 +159,7 @@ body {
 }
 
 /* ==========================================================================
-   Card Fixed Container (Keeps Card Centered on Screen)
+   Card Fixed Container
    ========================================================================== */
 .card-fixed-container {
   position: fixed;
@@ -173,7 +172,7 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 50;
-  pointer-events: none; /* Allows scrolling on background */
+  pointer-events: none;
 }
 
 /* ==========================================================================
@@ -193,13 +192,12 @@ body {
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  pointer-events: auto; /* Re-enable pointer events for card interactions */
+  pointer-events: auto;
 }
 
 .player-inner {
   display: grid;
-  grid-template-columns: 1.25fr 0.75fr 40px;
+  grid-template-columns: 1.3fr 0.7fr 40px;
   gap: 32px;
   align-items: center;
 }
@@ -212,7 +210,7 @@ body {
 .slides-viewport {
   position: relative;
   width: 100%;
-  height: 220px; /* Fixed height for consistency */
+  height: 260px; /* Increased to prevent clipping */
   overflow: hidden;
 }
 
@@ -225,12 +223,12 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 12px;
+  gap: 16px;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  /* GSAP will control translation, but standard CSS transitions handle fallback */
   transition: opacity 0.4s ease, visibility 0.4s ease;
+  padding-bottom: 8px; /* Safe space at the bottom */
 }
 
 .slide.active {
@@ -239,22 +237,8 @@ body {
   pointer-events: auto;
 }
 
-.pill-tag {
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 6px 16px;
-  border-radius: var(--pill-radius);
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-primary);
-  text-transform: capitalize;
-  width: fit-content;
-  margin-bottom: 4px;
-}
-
 .player-title {
-  font-size: 36px;
+  font-size: 38px;
   font-weight: 400;
   line-height: 1.1;
   letter-spacing: -0.03em;
@@ -264,7 +248,7 @@ body {
 
 .player-desc {
   font-size: 15px;
-  line-height: 1.45;
+  line-height: 1.5;
   color: var(--text-muted);
   font-weight: 400;
   letter-spacing: -0.01em;
@@ -274,7 +258,7 @@ body {
 .mini-contact-form {
   display: flex;
   gap: 8px;
-  margin-top: 8px;
+  margin-top: 4px;
   width: 100%;
 }
 
@@ -320,34 +304,13 @@ body {
   transform: scale(0.95);
 }
 
-/* Center Column: Audio Wave and Volume */
+/* Center Column: Volume Control only */
 .player-interactive {
   display: flex;
-  flex-direction: column;
-  gap: 28px;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-.visualizer-container {
-  width: 100%;
-  height: 64px;
-  position: relative;
-  display: flex;
   align-items: center;
   justify-content: center;
-}
-
-#visualizerCanvas {
   width: 100%;
   height: 100%;
-  opacity: 0.15;
-  transition: opacity 0.5s ease;
-}
-
-.player-card.playing #visualizerCanvas {
-  opacity: 0.85;
 }
 
 /* Volume Slider Container */
@@ -461,86 +424,6 @@ body {
   border-radius: 1px;
 }
 
-/* Bottom Controls */
-.player-controls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.controls-wrapper {
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: var(--pill-radius);
-  padding: 8px 12px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  box-shadow: 
-    0 10px 30px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-}
-
-.control-btn {
-  background: none;
-  border: none;
-  color: var(--text-primary);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.prev-btn, .next-btn {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  font-size: 16px;
-  gap: 2px;
-}
-
-.prev-btn:hover, .next-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  transform: scale(1.05);
-}
-
-.prev-btn:active, .next-btn:active {
-  transform: scale(0.95);
-}
-
-.btn-time-label {
-  font-size: 10px;
-  font-weight: 600;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  margin-top: 2px;
-}
-
-.play-btn {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: var(--text-primary);
-  color: var(--bg-dark);
-  font-size: 20px;
-}
-
-.play-btn:hover {
-  transform: scale(1.06);
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-}
-
-.play-btn:active {
-  transform: scale(0.96);
-}
-
 /* ==========================================================================
    Responsive Adaptations
    ========================================================================== */
@@ -562,7 +445,7 @@ body {
   }
   
   .player-progress-column {
-    display: none !important; /* Hide vertical timeline on small screens */
+    display: none !important;
   }
 }
 
@@ -580,14 +463,14 @@ body {
   
   .player-inner {
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 24px;
   }
   
   .slides-viewport {
-    height: 200px;
+    height: 240px; /* Adjust slide height on mobile */
   }
   
   .player-title {
-    font-size: 28px;
+    font-size: 30px;
   }
 }
