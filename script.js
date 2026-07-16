@@ -2,13 +2,84 @@
 gsap.registerPlugin(ScrollTrigger);
 
 document.addEventListener("DOMContentLoaded", () => {
+  initBackgroundAnimation();
   initScrollAnimations();
   initVolumeSlider();
   initContactForm();
 });
 
 /* ==========================================================================
-   GSAP Scroll-Driven Inner Slideshow
+   Background Image Sequence Animation (Canvas)
+   ========================================================================== */
+const frameCount = 270;
+const currentFramePath = index => `fluid/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
+const bgImages = [];
+const bgAnimationState = { frame: 0 };
+let bgCanvas, bgContext;
+
+function initBackgroundAnimation() {
+  bgCanvas = document.getElementById("bgCanvas");
+  if (!bgCanvas) return;
+  
+  bgContext = bgCanvas.getContext("2d");
+  
+  // Set initial canvas sizing and bind resize event
+  function resizeBgCanvas() {
+    bgCanvas.width = window.innerWidth;
+    bgCanvas.height = window.innerHeight;
+    renderBgFrame();
+  }
+  window.addEventListener("resize", resizeBgCanvas);
+  
+  // Preload all 270 frames in memory
+  for (let i = 1; i <= frameCount; i++) {
+    const img = new Image();
+    img.src = currentFramePath(i);
+    if (i === 1) {
+      img.onload = () => {
+        resizeBgCanvas(); // Initialize and draw first frame immediately on load
+      };
+    }
+    bgImages.push(img);
+  }
+}
+
+function renderBgFrame() {
+  if (bgImages.length === 0 || !bgCanvas || !bgContext) return;
+  
+  const activeFrameIndex = Math.min(bgAnimationState.frame, frameCount - 1);
+  const img = bgImages[activeFrameIndex];
+  
+  if (img && (img.complete || img.naturalWidth > 0)) {
+    drawCoverImage(img, bgContext, bgCanvas.width, bgCanvas.height);
+  }
+}
+
+// Custom cover scale rendering logic (simulates CSS object-fit: cover on Canvas)
+function drawCoverImage(img, ctx, canvasWidth, canvasHeight) {
+  const imgRatio = img.width / img.height;
+  const canvasRatio = canvasWidth / canvasHeight;
+  
+  let drawWidth, drawHeight, x, y;
+  
+  if (imgRatio > canvasRatio) {
+    drawHeight = canvasHeight;
+    drawWidth = canvasHeight * imgRatio;
+    x = (canvasWidth - drawWidth) / 2;
+    y = 0;
+  } else {
+    drawWidth = canvasWidth;
+    drawHeight = canvasWidth / imgRatio;
+    x = 0;
+    y = (canvasHeight - drawHeight) / 2;
+  }
+  
+  ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+  ctx.drawImage(img, x, y, drawWidth, drawHeight);
+}
+
+/* ==========================================================================
+   GSAP Scroll-Driven Inner Slideshow & Background Sync
    ========================================================================== */
 function initScrollAnimations() {
   const card = document.getElementById("playerCard");
@@ -16,19 +87,21 @@ function initScrollAnimations() {
   if (!card || !progressFill) return;
 
   // Initialize initial states for slides
-  // Slide 1 starts active and visible
   gsap.set("#slide1", { opacity: 1, y: 0, autoAlpha: 1 });
-  // Slides 2, 3, 4 start offset and hidden
   gsap.set(["#slide2", "#slide3", "#slide4"], { opacity: 0, y: 30, autoAlpha: 0 });
 
-  // Main scroll timeline to drive the slideshow and vertical progress bar
+  // Main scroll timeline to drive the slideshow, background canvas, and progress bar
   const mainTl = gsap.timeline({
     scrollTrigger: {
       trigger: ".scroll-height-trigger",
       start: "top top",
       end: "bottom bottom",
       scrub: 1.5, // High scrub value for liquid, smooth scroll inertia
-      invalidateOnRefresh: true
+      invalidateOnRefresh: true,
+      onUpdate: () => {
+        // Redraw frames on update to ensure tight synchronization
+        renderBgFrame();
+      }
     }
   });
 
@@ -38,7 +111,16 @@ function initScrollAnimations() {
     ease: "none"
   }, 0);
 
-  // 2. Slide 1 out, Slide 2 in (Smooth overlapping transitions)
+  // 2. Animate background canvas frames from 0 to 269
+  mainTl.to(bgAnimationState, {
+    frame: frameCount - 1,
+    snap: "frame",
+    ease: "none",
+    duration: 1.0,
+    onUpdate: renderBgFrame
+  }, 0);
+
+  // 3. Slide 1 out, Slide 2 in (Smooth overlapping transitions)
   mainTl
     .to("#slide1", {
       opacity: 0,
@@ -55,7 +137,7 @@ function initScrollAnimations() {
       ease: "sine.inOut"
     }, 0.20);
 
-  // 3. Slide 2 out, Slide 3 in
+  // 4. Slide 2 out, Slide 3 in
   mainTl
     .to("#slide2", {
       opacity: 0,
@@ -72,7 +154,7 @@ function initScrollAnimations() {
       ease: "sine.inOut"
     }, 0.50);
 
-  // 4. Slide 3 out, Slide 4 in
+  // 5. Slide 3 out, Slide 4 in
   mainTl
     .to("#slide3", {
       opacity: 0,
@@ -109,7 +191,6 @@ function initVolumeSlider() {
     const trackWidth = rect.width;
     let offsetX = clientX - rect.left;
     
-    // Clamp offset to track bounds
     offsetX = Math.max(0, Math.min(offsetX, trackWidth));
     const percentage = (offsetX / trackWidth) * 100;
     
@@ -118,20 +199,17 @@ function initVolumeSlider() {
     handle.style.left = `${percentage}%`;
   }
 
-  // Pointer Down
   container.addEventListener("pointerdown", (e) => {
     isDragging = true;
     container.setPointerCapture(e.pointerId);
     updateVolume(e.clientX);
   });
 
-  // Pointer Move
   container.addEventListener("pointermove", (e) => {
     if (!isDragging) return;
     updateVolume(e.clientX);
   });
 
-  // Pointer Up / Cancel
   const handleRelease = (e) => {
     if (isDragging) {
       isDragging = false;
@@ -157,7 +235,6 @@ function initContactForm() {
 
     if (!value) return;
 
-    // Visual feedback for successful submit
     gsap.to(form, {
       opacity: 0,
       y: -10,
