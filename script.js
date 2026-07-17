@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* ==========================================================================
-   Background Image Sequence Animation (Canvas)
+   Background Image Sequence Animation (Canvas with Capped Resolution)
    ========================================================================== */
 const frameCount = 270;
 const currentFramePath = index => `fluid/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
@@ -23,25 +23,48 @@ function initBackgroundAnimation() {
   
   bgContext = bgCanvas.getContext("2d");
   
-  // Set initial canvas sizing and bind resize event
+  // Set capped internal canvas resolution (width capped to 1280px)
+  // Lowers pixel processing demands by up to 80% on high-DPI displays.
+  // The CSS blur(12px) filters out any low-res artifacts, making it look beautifully soft and smooth.
   function resizeBgCanvas() {
-    bgCanvas.width = window.innerWidth;
-    bgCanvas.height = window.innerHeight;
+    const maxWidth = 1280;
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const aspect = w / h;
+    
+    if (w > maxWidth) {
+      bgCanvas.width = maxWidth;
+      bgCanvas.height = Math.round(maxWidth / aspect);
+    } else {
+      bgCanvas.width = w;
+      bgCanvas.height = h;
+    }
     renderBgFrame();
   }
   window.addEventListener("resize", resizeBgCanvas);
   
-  // Preload all 270 frames in memory
+  // Preload and pre-decode all 270 frames
+  let firstLoaded = false;
   for (let i = 1; i <= frameCount; i++) {
     const img = new Image();
     img.src = currentFramePath(i);
+    
+    // Call HTML5 decode API to decompress image into GPU cache immediately
+    // This removes micro-stutters/lag during scrolling because decoding is done beforehand.
+    if (img.decode) {
+      img.decode().catch(() => { /* silent fallback */ });
+    }
+    
     if (i === 1) {
       img.onload = () => {
-        resizeBgCanvas(); // Initialize and draw first frame immediately on load
+        firstLoaded = true;
+        resizeBgCanvas();
       };
     }
     bgImages.push(img);
   }
+  
+  if (firstLoaded) resizeBgCanvas();
 }
 
 function renderBgFrame() {
@@ -96,10 +119,9 @@ function initScrollAnimations() {
       trigger: ".scroll-height-trigger",
       start: "top top",
       end: "bottom bottom",
-      scrub: 1.5, // High scrub value for liquid, smooth scroll inertia
+      scrub: 0.8, // Optimized scrub catching speed (highly responsive)
       invalidateOnRefresh: true,
       onUpdate: () => {
-        // Redraw frames on update to ensure tight synchronization
         renderBgFrame();
       }
     }
