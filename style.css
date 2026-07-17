@@ -123,11 +123,12 @@ body {
 }
 
 .logo {
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: -0.04em;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 34px;
+  letter-spacing: 0.05em;
   text-decoration: none;
   color: var(--text-primary);
+  line-height: 1;
 }
 
 .nav-status {
