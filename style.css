@@ -203,6 +203,7 @@ body {
   grid-template-columns: 1.3fr 0.7fr 40px;
   gap: 32px;
   align-items: center;
+  transition: grid-template-columns 0.5s cubic-bezier(0.16, 1, 0.3, 1), gap 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Left Column: Content Slides Viewport */
@@ -493,21 +494,28 @@ body {
 
 .folder-wrapper {
   position: relative;
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 
+    0 10px 25px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .folder-icon3d {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.4));
-  animation: float3d 3s ease-in-out infinite;
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
   border-radius: 12px;
+  animation: float3d 3s ease-in-out infinite;
 }
 
 .folder-hint {
@@ -520,8 +528,15 @@ body {
   transition: all 0.2s ease;
 }
 
+/* Folder Hover Glassmorphic Glow */
 .folder-container:hover .folder-wrapper {
   transform: scale(1.08);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(56, 189, 248, 0.4);
+  box-shadow: 
+    0 0 25px rgba(56, 189, 248, 0.35), /* Neon cyan glow */
+    0 12px 30px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .folder-container:hover .folder-hint {
@@ -574,6 +589,12 @@ body {
   pointer-events: auto;
 }
 
+/* Expand plans column width dynamically on hover */
+.show-plans .player-inner {
+  grid-template-columns: 1.7fr 0.3fr 40px;
+  gap: 16px;
+}
+
 .plans-title {
   font-size: 13px;
   font-family: var(--font-mono);
@@ -593,8 +614,8 @@ body {
 .plan-card-mini {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  padding: 14px 10px;
+  border-radius: 12px;
+  padding: 12px 6px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -619,14 +640,15 @@ body {
 }
 
 .plan-card-mini h4 {
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 500;
   color: var(--text-primary);
   text-transform: lowercase;
+  white-space: nowrap;
 }
 
 .plan-price {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--accent-orange);
   font-family: var(--font-mono);
@@ -634,7 +656,7 @@ body {
 }
 
 .plan-tagline {
-  font-size: 10px;
+  font-size: 9px;
   color: var(--text-muted);
   line-height: 1.25;
 }
