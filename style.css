@@ -553,9 +553,10 @@ body {
    ========================================================================== */
 .slide-main-content {
   width: 100%;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease, filter 0.5s ease;
   opacity: 1;
   transform: translateX(0);
+  filter: blur(0px);
 }
 
 .slide-plans-content {
@@ -569,21 +570,24 @@ body {
   justify-content: center;
   gap: 12px;
   opacity: 0;
-  transform: translateX(60px);
+  transform: translateX(40px);
+  filter: blur(8px); /* Starts blurred */
   pointer-events: none;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease, filter 0.5s ease;
 }
 
 /* Active plans horizontal transition trigger classes */
 .show-plans .slide-main-content {
-  transform: translateX(-120%);
+  transform: translateX(-40px); /* Small translation prevents text from leaking outside card */
   opacity: 0;
+  filter: blur(8px); /* Blurs out */
   pointer-events: none;
 }
 
 .show-plans .slide-plans-content {
   transform: translateX(0);
   opacity: 1;
+  filter: blur(0px); /* Becomes sharp */
   pointer-events: auto;
 }
 
