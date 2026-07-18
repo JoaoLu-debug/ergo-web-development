@@ -494,8 +494,8 @@ body {
 
 .folder-wrapper {
   position: relative;
-  width: 100px;
-  height: 100px;
+  width: 130px;
+  height: 130px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -503,8 +503,8 @@ body {
 }
 
 .folder-icon3d {
-  width: 90px;
-  height: 90px;
+  width: 120px;
+  height: 120px;
   object-fit: contain;
   filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
   animation: float3d 3s ease-in-out infinite;
@@ -516,9 +516,11 @@ body {
   font-family: var(--font-mono);
   color: var(--accent-orange);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   opacity: 0.8;
   transition: all 0.2s ease;
+  margin-top: 6px;
+  pointer-events: none;
 }
 
 /* Folder Hover Contoured Glow */
@@ -584,7 +586,7 @@ body {
 
 /* Expand plans column width dynamically on hover */
 .show-plans .player-inner {
-  grid-template-columns: 1.7fr 0.3fr 40px;
+  grid-template-columns: 1.6fr 0.4fr 40px;
   gap: 16px;
 }
 
