@@ -110,9 +110,9 @@ function initScrollAnimations() {
   const progressFill = document.getElementById("progressFill");
   if (!card || !progressFill) return;
 
-  // Initialize initial states for slides
-  gsap.set("#slide1", { opacity: 1, y: 0, autoAlpha: 1 });
-  gsap.set(["#slide2", "#slide3", "#slide4"], { opacity: 0, y: 30, autoAlpha: 0 });
+  // Initialize initial states for slides with blur
+  gsap.set("#slide1", { opacity: 1, y: 0, autoAlpha: 1, filter: "blur(0px)" });
+  gsap.set(["#slide2", "#slide3", "#slide4"], { opacity: 0, y: 30, autoAlpha: 0, filter: "blur(8px)" });
 
   // Main scroll timeline to drive the slideshow, background canvas, and progress bar
   const mainTl = gsap.timeline({
@@ -143,11 +143,12 @@ function initScrollAnimations() {
     onUpdate: renderBgFrame
   }, 0);
 
-  // 3. Slide 1 out, Slide 2 in (Smooth overlapping transitions)
+  // 3. Slide 1 out, Slide 2 in (Typographic Motion Blur transitions)
   mainTl
     .to("#slide1", {
       opacity: 0,
       y: -30,
+      filter: "blur(8px)",
       autoAlpha: 0,
       duration: 0.15,
       ease: "sine.inOut"
@@ -155,6 +156,7 @@ function initScrollAnimations() {
     .to("#slide2", {
       opacity: 1,
       y: 0,
+      filter: "blur(0px)",
       autoAlpha: 1,
       duration: 0.15,
       ease: "sine.inOut"
@@ -165,6 +167,7 @@ function initScrollAnimations() {
     .to("#slide2", {
       opacity: 0,
       y: -30,
+      filter: "blur(8px)",
       autoAlpha: 0,
       duration: 0.15,
       ease: "sine.inOut"
@@ -172,6 +175,7 @@ function initScrollAnimations() {
     .to("#slide3", {
       opacity: 1,
       y: 0,
+      filter: "blur(0px)",
       autoAlpha: 1,
       duration: 0.15,
       ease: "sine.inOut"
@@ -198,6 +202,7 @@ function initScrollAnimations() {
     .to("#slide3", {
       opacity: 0,
       y: -30,
+      filter: "blur(8px)",
       autoAlpha: 0,
       duration: 0.15,
       ease: "sine.inOut"
@@ -205,6 +210,7 @@ function initScrollAnimations() {
     .to("#slide4", {
       opacity: 1,
       y: 0,
+      filter: "blur(0px)",
       autoAlpha: 1,
       duration: 0.15,
       ease: "sine.inOut"
