@@ -500,6 +500,7 @@ body {
   align-items: center;
   justify-content: center;
   transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  margin-left: -10px; /* Offset the 3D isometric tilt to align visually with the text */
 }
 
 .folder-icon3d {
@@ -517,6 +518,8 @@ body {
   color: var(--accent-orange);
   text-transform: uppercase;
   letter-spacing: 0.12em;
+  text-indent: 0.12em; /* Balance trailing letter-spacing */
+  text-align: center;
   opacity: 0.8;
   transition: all 0.2s ease;
   margin-top: 6px;
