@@ -111,7 +111,9 @@ function initScrollAnimations() {
 
   // Initialize initial states for slides with blur
   gsap.set("#slide1", { opacity: 1, y: 0, autoAlpha: 1, filter: "blur(0px)" });
-  gsap.set(["#slide2", "#slide3", "#slide4"], { opacity: 0, y: 30, autoAlpha: 0, filter: "blur(8px)" });
+  gsap.set(["#slide2", "#slide4"], { opacity: 0, y: 30, autoAlpha: 0, filter: "blur(8px)" });
+  gsap.set("#slide3", { opacity: 0, y: 30, autoAlpha: 0 });
+  gsap.set("#slide3Text", { filter: "blur(8px)" });
 
   // Main scroll timeline to drive the slideshow, background canvas, and progress bar
   const mainTl = gsap.timeline({
@@ -142,7 +144,7 @@ function initScrollAnimations() {
     onUpdate: renderBgFrame
   }, 0);
 
-  // 3. Slide 1 out, Slide 2 in (Typographic Motion Blur transitions)
+  // 3. Slide 1 out, Slide 2 in (Smooth transitions with hold zones)
   mainTl
     .to("#slide1", {
       opacity: 0,
@@ -150,18 +152,18 @@ function initScrollAnimations() {
       filter: "blur(8px)",
       autoAlpha: 0,
       duration: 0.15,
-      ease: "sine.inOut"
-    }, 0.15)
+      ease: "power2.in"
+    }, 0.20)
     .to("#slide2", {
       opacity: 1,
       y: 0,
       filter: "blur(0px)",
       autoAlpha: 1,
       duration: 0.15,
-      ease: "sine.inOut"
+      ease: "power2.out"
     }, 0.20);
 
-  // 4. Slide 2 out, Slide 3 in
+  // 4. Slide 2 out, Slide 3 in (Slide 3 text unblurs, parent remains sharp)
   mainTl
     .to("#slide2", {
       opacity: 0,
@@ -169,52 +171,61 @@ function initScrollAnimations() {
       filter: "blur(8px)",
       autoAlpha: 0,
       duration: 0.15,
-      ease: "sine.inOut"
-    }, 0.45)
+      ease: "power2.in"
+    }, 0.50)
     .to("#slide3", {
       opacity: 1,
       y: 0,
-      filter: "blur(0px)",
       autoAlpha: 1,
       duration: 0.15,
-      ease: "sine.inOut"
+      ease: "power2.out"
     }, 0.50)
+    .to("#slide3Text", {
+      filter: "blur(0px)",
+      duration: 0.15,
+      ease: "power2.out"
+    }, 0.50)
+    // Fade in 3D Folder specifically on Slide 3
     .to("#folderContainer", {
       display: "flex",
       opacity: 1,
       scale: 1,
       autoAlpha: 1,
-      duration: 0.1,
+      duration: 0.15,
       ease: "sine.inOut"
-    }, 0.52);
+    }, 0.50);
 
   // 5. Slide 3 out, Slide 4 in
   mainTl
     .to("#slide3", {
       opacity: 0,
       y: -30,
-      filter: "blur(8px)",
       autoAlpha: 0,
       duration: 0.15,
-      ease: "sine.inOut"
-    }, 0.75)
+      ease: "power2.in"
+    }, 0.80)
+    .to("#slide3Text", {
+      filter: "blur(8px)",
+      duration: 0.15,
+      ease: "power2.in"
+    }, 0.80)
     .to("#slide4", {
       opacity: 1,
       y: 0,
       filter: "blur(0px)",
       autoAlpha: 1,
       duration: 0.15,
-      ease: "sine.inOut"
+      ease: "power2.out"
     }, 0.80)
-    // Morph 3D Folder back into hidden state on Slide 4
+    // Fade out 3D Folder on Slide 4
     .to("#folderContainer", {
       opacity: 0,
       scale: 0.9,
       autoAlpha: 0,
-      duration: 0.1,
+      duration: 0.15,
       display: "none",
       ease: "sine.inOut"
-    }, 0.73);
+    }, 0.80);
 }
 
 
