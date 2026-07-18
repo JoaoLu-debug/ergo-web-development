@@ -494,28 +494,21 @@ body {
 
 .folder-wrapper {
   position: relative;
-  width: 90px;
-  height: 90px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
+  width: 100px;
+  height: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  box-shadow: 
-    0 10px 25px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .folder-icon3d {
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
-  border-radius: 12px;
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
   animation: float3d 3s ease-in-out infinite;
+  transition: filter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .folder-hint {
@@ -528,15 +521,15 @@ body {
   transition: all 0.2s ease;
 }
 
-/* Folder Hover Glassmorphic Glow */
+/* Folder Hover Contoured Glow */
 .folder-container:hover .folder-wrapper {
   transform: scale(1.08);
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(56, 189, 248, 0.4);
-  box-shadow: 
-    0 0 25px rgba(56, 189, 248, 0.35), /* Neon cyan glow */
-    0 12px 30px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.folder-container:hover .folder-icon3d {
+  filter: 
+    drop-shadow(0 0 25px rgba(56, 189, 248, 0.6)) 
+    drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
 }
 
 .folder-container:hover .folder-hint {
