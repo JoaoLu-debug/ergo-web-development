@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initScrollAnimations();
   initVolumeSlider();
   initContactForm();
+  initFolderHover();
 });
 
 /* ==========================================================================
@@ -174,7 +175,23 @@ function initScrollAnimations() {
       autoAlpha: 1,
       duration: 0.15,
       ease: "sine.inOut"
-    }, 0.50);
+    }, 0.50)
+    // Morph Volume Slider into 3D Folder specifically on Slide 3
+    .to("#volumeContainer", {
+      opacity: 0,
+      scale: 0.9,
+      autoAlpha: 0,
+      duration: 0.1,
+      ease: "sine.inOut"
+    }, 0.48)
+    .to("#folderContainer", {
+      display: "flex",
+      opacity: 1,
+      scale: 1,
+      autoAlpha: 1,
+      duration: 0.1,
+      ease: "sine.inOut"
+    }, 0.52);
 
   // 5. Slide 3 out, Slide 4 in
   mainTl
@@ -191,7 +208,23 @@ function initScrollAnimations() {
       autoAlpha: 1,
       duration: 0.15,
       ease: "sine.inOut"
-    }, 0.80);
+    }, 0.80)
+    // Morph 3D Folder back into Volume Slider on Slide 4
+    .to("#folderContainer", {
+      opacity: 0,
+      scale: 0.9,
+      autoAlpha: 0,
+      duration: 0.1,
+      display: "none",
+      ease: "sine.inOut"
+    }, 0.73)
+    .to("#volumeContainer", {
+      opacity: 1,
+      scale: 1,
+      autoAlpha: 1,
+      duration: 0.1,
+      ease: "sine.inOut"
+    }, 0.77);
 }
 
 /* ==========================================================================
@@ -266,5 +299,25 @@ function initContactForm() {
         gsap.to(form, { opacity: 1, y: 0, duration: 0.3 });
       }
     });
+  });
+}
+
+/* ==========================================================================
+   Slide 3 Plans Folder Hover Interaction
+   ========================================================================== */
+function initFolderHover() {
+  const folder = document.getElementById("folderContainer");
+  const card = document.getElementById("playerCard");
+  
+  if (!folder || !card) return;
+  
+  // Mouseenter on the folder container -> show the plans layout
+  folder.addEventListener("mouseenter", () => {
+    card.classList.add("show-plans");
+  });
+  
+  // Mouseleave from the player card entirely -> reset back to default slide text
+  card.addEventListener("mouseleave", () => {
+    card.classList.remove("show-plans");
   });
 }
