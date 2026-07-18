@@ -4,7 +4,6 @@ gsap.registerPlugin(ScrollTrigger);
 document.addEventListener("DOMContentLoaded", () => {
   initBackgroundAnimation();
   initScrollAnimations();
-  initVolumeSlider();
   initContactForm();
   initFolderHover();
 });
@@ -180,14 +179,6 @@ function initScrollAnimations() {
       duration: 0.15,
       ease: "sine.inOut"
     }, 0.50)
-    // Morph Volume Slider into 3D Folder specifically on Slide 3
-    .to("#volumeContainer", {
-      opacity: 0,
-      scale: 0.9,
-      autoAlpha: 0,
-      duration: 0.1,
-      ease: "sine.inOut"
-    }, 0.48)
     .to("#folderContainer", {
       display: "flex",
       opacity: 1,
@@ -215,7 +206,7 @@ function initScrollAnimations() {
       duration: 0.15,
       ease: "sine.inOut"
     }, 0.80)
-    // Morph 3D Folder back into Volume Slider on Slide 4
+    // Morph 3D Folder back into hidden state on Slide 4
     .to("#folderContainer", {
       opacity: 0,
       scale: 0.9,
@@ -223,64 +214,10 @@ function initScrollAnimations() {
       duration: 0.1,
       display: "none",
       ease: "sine.inOut"
-    }, 0.73)
-    .to("#volumeContainer", {
-      opacity: 1,
-      scale: 1,
-      autoAlpha: 1,
-      duration: 0.1,
-      ease: "sine.inOut"
-    }, 0.77);
+    }, 0.73);
 }
 
-/* ==========================================================================
-   Interactive Volume Control (Mouse/Touch Drag Math)
-   ========================================================================== */
-function initVolumeSlider() {
-  const container = document.getElementById("volumeContainer");
-  const track = container.querySelector(".slider-track");
-  const handle = document.getElementById("sliderHandle");
-  const valText = document.getElementById("volumeValue");
 
-  if (!container || !track || !handle || !valText) return;
-
-  let isDragging = false;
-  let volume = 54; // Initial volume
-
-  function updateVolume(clientX) {
-    const rect = track.getBoundingClientRect();
-    const trackWidth = rect.width;
-    let offsetX = clientX - rect.left;
-    
-    offsetX = Math.max(0, Math.min(offsetX, trackWidth));
-    const percentage = (offsetX / trackWidth) * 100;
-    
-    volume = Math.round((offsetX / trackWidth) * 100);
-    valText.textContent = volume;
-    handle.style.left = `${percentage}%`;
-  }
-
-  container.addEventListener("pointerdown", (e) => {
-    isDragging = true;
-    container.setPointerCapture(e.pointerId);
-    updateVolume(e.clientX);
-  });
-
-  container.addEventListener("pointermove", (e) => {
-    if (!isDragging) return;
-    updateVolume(e.clientX);
-  });
-
-  const handleRelease = (e) => {
-    if (isDragging) {
-      isDragging = false;
-      container.releasePointerCapture(e.pointerId);
-    }
-  };
-  
-  container.addEventListener("pointerup", handleRelease);
-  container.addEventListener("pointercancel", handleRelease);
-}
 
 /* ==========================================================================
    Compact Inline Contact Form Submission

@@ -215,10 +215,7 @@ body {
   position: relative;
   width: 100%;
   height: 260px; /* High enough to prevent clipping */
-  overflow: hidden;
-  /* Fade out edges mask (smooths text cutoff at boundary lines) */
-  mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
+  overflow: visible; /* Allows motion blurred text to transition softly without hard clipped edges */
 }
 
 .slide {
