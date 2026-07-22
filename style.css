@@ -203,7 +203,6 @@ body {
   grid-template-columns: 1.3fr 0.7fr 40px;
   gap: 32px;
   align-items: center;
-  transition: grid-template-columns 0.5s cubic-bezier(0.16, 1, 0.3, 1), gap 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Left Column: Content Slides Viewport */
@@ -499,7 +498,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); /* Smoother, matched deceleration ease */
   margin-left: -10px; /* Offset the 3D isometric tilt to align visually with the text */
 }
 
@@ -509,7 +508,7 @@ body {
   object-fit: contain;
   filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
   animation: float3d 3s ease-in-out infinite;
-  transition: filter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: filter 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .folder-hint {
@@ -526,9 +525,14 @@ body {
   pointer-events: none;
 }
 
-/* Folder Hover Contoured Glow */
+/* Folder Hover Contoured Glow & Shift */
 .folder-container:hover .folder-wrapper {
   transform: scale(1.08);
+}
+
+/* Slide right when plans are active to make room (completely hardware-accelerated) */
+.show-plans .folder-wrapper {
+  transform: scale(1.08) translateX(45px);
 }
 
 .folder-container:hover .folder-icon3d {
@@ -553,7 +557,7 @@ body {
    ========================================================================== */
 .slide-main-content {
   width: 100%;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease, filter 0.5s ease;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   opacity: 1;
   transform: translateX(0);
   filter: blur(0px);
@@ -563,7 +567,7 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 125%; /* Expand width horizontally without altering layout grid */
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -573,7 +577,7 @@ body {
   transform: translateX(40px);
   filter: blur(8px); /* Starts blurred */
   pointer-events: none;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease, filter 0.5s ease;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Active plans horizontal transition trigger classes */
@@ -591,11 +595,7 @@ body {
   pointer-events: auto;
 }
 
-/* Expand plans column width dynamically on hover */
-.show-plans .player-inner {
-  grid-template-columns: 1.6fr 0.4fr 40px;
-  gap: 16px;
-}
+/* Removed dynamic player-inner grid column layout transition */
 
 .plans-title {
   font-size: 13px;
