@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ==========================================================================
    Background Image Sequence Animation (Canvas with Capped Resolution)
    ========================================================================== */
-const frameCount = 270;
+const frameCount = 151;
 const currentFramePath = index => `fluid/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
 const bgImages = [];
 const bgAnimationState = { frame: 0 };
