@@ -27,18 +27,13 @@ function initBackgroundAnimation() {
   // Lowers pixel processing demands by up to 80% on high-DPI displays.
   // The CSS blur(12px) filters out any low-res artifacts, making it look beautifully soft and smooth.
   function resizeBgCanvas() {
-    const maxWidth = 1280;
+    const targetWidth = 320;
     const w = window.innerWidth;
     const h = window.innerHeight;
     const aspect = w / h;
     
-    if (w > maxWidth) {
-      bgCanvas.width = maxWidth;
-      bgCanvas.height = Math.round(maxWidth / aspect);
-    } else {
-      bgCanvas.width = w;
-      bgCanvas.height = h;
-    }
+    bgCanvas.width = targetWidth;
+    bgCanvas.height = Math.round(targetWidth / aspect);
     renderBgFrame();
   }
   window.addEventListener("resize", resizeBgCanvas);

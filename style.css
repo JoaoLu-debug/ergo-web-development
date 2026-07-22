@@ -70,17 +70,16 @@ body {
 }
 
 #bgCanvas {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  /* Blurred background with scale correction to prevent edge bleeding */
-  filter: blur(12px);
-  transform: scale(1.05);
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  transform: scale(1.08); /* Prevent blur edge bleed with lower resolution */
+  filter: blur(8px); /* Lower blur radius is cheaper for GPU compositor */
   will-change: transform;
-  backface-visibility: hidden;
 }
 
 .bg-gradient-overlay {
@@ -232,6 +231,7 @@ body {
   pointer-events: none;
   transition: opacity 0.4s ease, visibility 0.4s ease;
   padding-bottom: 8px;
+  will-change: transform, opacity, filter;
 }
 
 .slide.active {
@@ -561,6 +561,7 @@ body {
   opacity: 1;
   transform: translateX(0);
   filter: blur(0px);
+  will-change: transform, opacity, filter;
 }
 
 .slide-plans-content {
@@ -578,6 +579,7 @@ body {
   filter: blur(8px); /* Starts blurred */
   pointer-events: none;
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity, filter;
 }
 
 /* Active plans horizontal transition trigger classes */
