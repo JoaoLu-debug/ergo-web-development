@@ -487,6 +487,8 @@ body {
   gap: 8px;
   width: 100%;
   cursor: pointer;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
 }
 
 .folder-wrapper {
@@ -528,9 +530,9 @@ body {
   transform: scale(1.08);
 }
 
-/* Slide right when plans are active to make room (completely hardware-accelerated) */
-.show-plans .folder-wrapper {
-  transform: scale(1.08) translateX(45px);
+/* Slide the entire container (folder + text) when plans are active (hardware-accelerated) */
+.show-plans .folder-container {
+  transform: translateX(45px);
 }
 
 .folder-container:hover .folder-icon3d {
