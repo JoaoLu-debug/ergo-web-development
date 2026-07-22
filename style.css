@@ -13,9 +13,8 @@
   --text-muted: rgba(255, 255, 255, 0.65);
   
   /* Glassmorphism Presets */
-  --glass-bg: rgba(255, 255, 255, 0.08);
-  --glass-border: rgba(255, 255, 255, 0.15);
-  --glass-blur: 24px;
+  --glass-bg: rgba(18, 18, 22, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.08);
   
   /* Layout */
   --card-radius: 32px;
@@ -186,15 +185,15 @@ body {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: var(--card-radius);
-  backdrop-filter: blur(var(--glass-blur)) saturate(140%);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
   padding: 40px;
   box-shadow: 
-    0 30px 60px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    0 30px 60px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
   display: flex;
   flex-direction: column;
   pointer-events: auto;
+  transform: translate3d(0, 0, 0); /* Force GPU compositing layer */
+  backface-visibility: hidden;
 }
 
 .player-inner {

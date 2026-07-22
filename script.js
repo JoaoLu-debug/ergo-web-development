@@ -73,21 +73,22 @@ function renderBgFrame() {
   }
 }
 
+const frameAspect = 320 / 137; // Constant aspect ratio cached globally for speed
+
 // Custom cover scale rendering logic (simulates CSS object-fit: cover on Canvas)
 function drawCoverImage(img, ctx, canvasWidth, canvasHeight) {
-  const imgRatio = img.width / img.height;
   const canvasRatio = canvasWidth / canvasHeight;
   
   let drawWidth, drawHeight, x, y;
   
-  if (imgRatio > canvasRatio) {
+  if (frameAspect > canvasRatio) {
     drawHeight = canvasHeight;
-    drawWidth = canvasHeight * imgRatio;
+    drawWidth = canvasHeight * frameAspect;
     x = (canvasWidth - drawWidth) / 2;
     y = 0;
   } else {
     drawWidth = canvasWidth;
-    drawHeight = canvasWidth / imgRatio;
+    drawHeight = canvasWidth / frameAspect;
     x = 0;
     y = (canvasHeight - drawHeight) / 2;
   }
@@ -117,10 +118,7 @@ function initScrollAnimations() {
       start: "top top",
       end: "bottom bottom",
       scrub: 0.8, // Optimized scrub catching speed (highly responsive)
-      invalidateOnRefresh: true,
-      onUpdate: () => {
-        renderBgFrame();
-      }
+      invalidateOnRefresh: true
     }
   });
 
